@@ -128,3 +128,40 @@ let instanceTwo = singleton.getProcessManager();
 console.log(instanceOne === instanceTwo);
 
 ```
+
+5. Write a Prime function which accepts idenfinite numbers as argument and return result as array.
+
+// func(1,3,5,8) and return [false,true,true,false]
+
+```js
+const checkPrime = (...nums)=>{
+
+  const result = nums.map((num)=> isPrime(num));
+  return result;
+
+}
+
+const isPrime = (n)=>{
+
+  if(n <= 1) return false;
+
+  for(let i = 2; i <= n/2; i++){
+    if(n%i==0) return false;
+  }
+
+  return true;
+}
+```
+
+Now make a function which behaves like an api and send the result back after 3000 seconds
+```js
+const asyncPrime = (nums,timeout)=>{
+  return new Promise((resolve,reject)=>{
+    setTimeout(()=> resolve(checkPrime(...nums)),timeout);
+  })
+}
+
+
+asyncPrime([1,3,5,8],3000).then(console.log);
+
+```
