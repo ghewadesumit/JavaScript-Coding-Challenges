@@ -47,3 +47,84 @@ const printArtist = (artistsObj,arr) => {
 
 console.log('artists are', printArtist(artistsByGenre,[]));
 ```
+
+
+2. Deep copy of an object
+```js
+Object.assign({}, obj);
+
+// another way
+JSON.parse(JSON.stringify(obj))
+```
+```js
+
+function deepCopy(obj){
+  if(typeof obj == 'object' || obj == null) return obj;
+  
+  let newObj = Array.isArray(obj) ? [] : {};
+  
+  for(let i in obj){
+    let value = obj[i];
+    newObj[i] = deepCopy(value);
+    }
+    
+    return newObj;
+  }
+```
+
+3. Create an object with a property 'marks' which cannot be set to a value less than 0
+
+```js
+const normalObj = {
+  marks:0,
+
+  set setMarks(value){
+    if(value < 0) throw new Error('Cant set value of marks less than zero');
+    this.marks = value;
+  },
+  get getMarks(){
+    return this.marks;
+  }
+}
+
+
+normalObj.setMarks = 10;
+console.log(normalObj.getMarks);
+```
+
+
+4. Singleton Pattern
+
+```js
+
+const singleton = (function(){
+  function ProcessManager(){
+    this.numprocess = 0;
+  }
+
+  let processManagerInstance = null;
+
+  function createProcessManager(){
+    
+      processManagerInstance = new ProcessManager();
+      return processManagerInstance;
+  }
+    return {
+
+      getProcessManager: ()=>{
+        if(!processManagerInstance){
+          processManagerInstance = createProcessManager();
+        }
+        return processManagerInstance;
+      }
+
+    }
+})()
+
+
+let instanceOne = singleton.getProcessManager();
+let instanceTwo = singleton.getProcessManager();
+
+console.log(instanceOne === instanceTwo);
+
+```
